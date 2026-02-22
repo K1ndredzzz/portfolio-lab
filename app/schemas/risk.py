@@ -46,13 +46,18 @@ class PortfolioQuoteResponse(BaseModel):
 
 # Monte Carlo schemas
 class MonteCarloRequest(BaseModel):
-    model: str = Field(..., description="Portfolio model (max_sharpe, risk_parity, min_variance)")
+    weights: Dict[str, float] = Field(..., min_length=1, description="Portfolio weights")
     horizon_months: int = Field(..., ge=12, le=60, description="Investment horizon in months")
 
     class Config:
         json_schema_extra = {
             "example": {
-                "model": "risk_parity",
+                "weights": {
+                    "SPY": 0.3,
+                    "TLT": 0.3,
+                    "GLD": 0.2,
+                    "BTC": 0.2
+                },
                 "horizon_months": 36
             }
         }
@@ -89,12 +94,17 @@ class MonteCarloResponse(BaseModel):
 
 # Stress Test schemas
 class StressTestRequest(BaseModel):
-    model: str = Field(..., description="Portfolio model (max_sharpe, risk_parity, min_variance)")
+    weights: Dict[str, float] = Field(..., min_length=1, description="Portfolio weights")
 
     class Config:
         json_schema_extra = {
             "example": {
-                "model": "risk_parity"
+                "weights": {
+                    "SPY": 0.3,
+                    "TLT": 0.3,
+                    "GLD": 0.2,
+                    "BTC": 0.2
+                }
             }
         }
 

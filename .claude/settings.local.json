@@ -28,7 +28,14 @@
       "Bash(docker-compose restart:*)",
       "Bash(docker tag:*)",
       "Bash(docker build:*)",
-      "Bash(docker-compose pull:*)"
+      "Bash(docker-compose pull:*)",
+      "Bash(find:*)",
+      "Bash(npm run build)",
+      "Bash(bash create_gcp_package.sh)",
+      "Bash(gcloud compute instances create:*)",
+      "Bash(gcloud compute scp:*)",
+      "Bash(gcloud compute ssh:*)",
+      "Bash(gcloud compute instances delete:*)"
     ]
   }
 }

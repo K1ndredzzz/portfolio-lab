@@ -1,0 +1,160 @@
+INFO:     Will watch for changes in these directories: ['D:\\Code_new\\portfolio-lab']
+INFO:     Uvicorn running on http://0.0.0.0:8030 (Press CTRL+C to quit)
+INFO:     Started reloader process [27576] using WatchFiles
+INFO:     Started server process [44896]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:12880 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:12896 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:13413 - "GET /api/v1/health/live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:13428 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:13750 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:13763 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:13774 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:13894 - "GET /api/v1/meta/assets HTTP/1.1" 200 OK
+INFO:     127.0.0.1:13896 - "GET /api/v1/meta/assets HTTP/1.1" 200 OK
+INFO:     127.0.0.1:13900 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:13899 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+Redis get error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis set error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+INFO:     127.0.0.1:13903 - "POST /api/v1/portfolios/quote HTTP/1.1" 200 OK
+Redis get error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis set error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis get error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis set error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis get error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis set error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+INFO:     127.0.0.1:13941 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:13937 - "POST /api/v1/portfolios/quote HTTP/1.1" 200 OK
+INFO:     127.0.0.1:13933 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:13946 - "POST /api/v1/portfolios/quote HTTP/1.1" 200 OK
+INFO:     127.0.0.1:13921 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:13943 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:13932 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:13925 - "POST /api/v1/portfolios/quote HTTP/1.1" 200 OK
+INFO:     127.0.0.1:13920 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+Redis get error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis set error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+INFO:     127.0.0.1:14156 - "POST /api/v1/portfolios/quote HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14153 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14152 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14189 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14190 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+Redis get error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis set error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+INFO:     127.0.0.1:14193 - "POST /api/v1/portfolios/quote HTTP/1.1" 200 OK
+Redis get error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis set error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+INFO:     127.0.0.1:14314 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14318 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14224 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14320 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14201 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14325 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14326 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14330 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14332 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14336 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14238 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14338 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14218 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14214 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14244 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14344 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14248 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14250 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14220 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14208 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14242 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14343 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14349 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14236 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14350 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14254 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14207 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14230 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14354 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14256 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14356 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14260 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14360 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14262 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14362 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14267 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14366 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14268 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14226 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14368 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14272 - "POST /api/v1/portfolios/quote HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14282 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14202 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14284 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14290 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14295 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14296 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14212 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14300 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14313 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14278 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14232 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14306 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14302 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14308 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14288 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14277 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+Redis get error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis set error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis get error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis set error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+INFO:     127.0.0.1:14371 - "POST /api/v1/portfolios/quote HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14378 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14379 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14382 - "POST /api/v1/portfolios/quote HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14429 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14430 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14436 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14440 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14434 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14442 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14452 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14460 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14446 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14459 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14448 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14454 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+Redis get error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis set error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+INFO:     127.0.0.1:14463 - "POST /api/v1/portfolios/quote HTTP/1.1" 200 OK
+Redis get error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis set error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+INFO:     127.0.0.1:14487 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14488 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14491 - "POST /api/v1/portfolios/quote HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14475 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14476 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14468 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14470 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14480 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14482 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14508 - "GET /api/v1/meta/assets HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14511 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:14510 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+Redis get error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis set error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+INFO:     127.0.0.1:14514 - "POST /api/v1/portfolios/quote HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'gcp_deployment_temp\jobs\scripts\40_compute_stress_tests_grid.py', 'gcp_deployment_temp\jobs\scripts\30_compute_monte_carlo_grid.py'. Reloading...
+INFO:     127.0.0.1:15219 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:15218 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+Redis get error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis set error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+INFO:     127.0.0.1:15222 - "POST /api/v1/portfolios/quote HTTP/1.1" 200 OK
+Redis get error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis set error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis get error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis set error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+INFO:     127.0.0.1:15228 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:15241 - "POST /api/v1/portfolios/quote HTTP/1.1" 200 OK
+INFO:     127.0.0.1:15237 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:15232 - "POST /api/v1/portfolios/quote HTTP/1.1" 200 OK
+INFO:     127.0.0.1:15238 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:15229 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK

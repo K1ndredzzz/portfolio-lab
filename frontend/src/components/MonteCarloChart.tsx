@@ -4,7 +4,7 @@ import { usePortfolioStore } from '../store';
 import { getMonteCarlo } from '../api';
 
 const MonteCarloChart: React.FC = () => {
-  const model = usePortfolioStore((state) => state.model);
+  const weights = usePortfolioStore((state) => state.weights);
   const horizon_months = usePortfolioStore((state) => state.horizon_months);
   const monteCarlo = usePortfolioStore((state) => state.monteCarlo);
   const setMonteCarlo = usePortfolioStore((state) => state.setMonteCarlo);
@@ -15,10 +15,16 @@ const MonteCarloChart: React.FC = () => {
 
   const abortControllerRef = useRef<AbortController | null>(null);
 
+  // Serialize weights for dependency tracking
+  const weightsKey = JSON.stringify(weights);
+
   useEffect(() => {
     let isMounted = true;
 
     const fetchMonteCarlo = async () => {
+      // Skip if no weights configured
+      if (Object.keys(weights).length === 0) return;
+
       // Cancel previous request
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
@@ -32,7 +38,7 @@ const MonteCarloChart: React.FC = () => {
       }
 
       try {
-        const data = await getMonteCarlo(model, horizon_months, abortControllerRef.current.signal);
+        const data = await getMonteCarlo(weights, horizon_months, abortControllerRef.current.signal);
         if (isMounted) {
           setMonteCarlo(data);
         }
@@ -58,7 +64,7 @@ const MonteCarloChart: React.FC = () => {
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [model, horizon_months]);
+  }, [weightsKey, horizon_months]);
 
   if (isLoadingMonteCarlo) {
     return (

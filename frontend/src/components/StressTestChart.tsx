@@ -4,7 +4,7 @@ import { usePortfolioStore } from '../store';
 import { getStressTest } from '../api';
 
 const StressTestChart: React.FC = () => {
-  const model = usePortfolioStore((state) => state.model);
+  const weights = usePortfolioStore((state) => state.weights);
   const stressTests = usePortfolioStore((state) => state.stressTests);
   const setStressTests = usePortfolioStore((state) => state.setStressTests);
   const isLoadingStress = usePortfolioStore((state) => state.isLoadingStress);
@@ -14,10 +14,16 @@ const StressTestChart: React.FC = () => {
 
   const abortControllerRef = useRef<AbortController | null>(null);
 
+  // Serialize weights for dependency tracking
+  const weightsKey = JSON.stringify(weights);
+
   useEffect(() => {
     let isMounted = true;
 
     const fetchStressTests = async () => {
+      // Skip if no weights configured
+      if (Object.keys(weights).length === 0) return;
+
       // Cancel previous request
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
@@ -31,7 +37,7 @@ const StressTestChart: React.FC = () => {
       }
 
       try {
-        const data = await getStressTest(model, abortControllerRef.current.signal);
+        const data = await getStressTest(weights, abortControllerRef.current.signal);
         if (isMounted) {
           setStressTests(data);
         }
@@ -57,7 +63,7 @@ const StressTestChart: React.FC = () => {
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [model]);
+  }, [weightsKey]);
 
   if (isLoadingStress) {
     return (

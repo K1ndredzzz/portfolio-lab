@@ -1,0 +1,9 @@
+INFO:     Will watch for changes in these directories: ['D:\\Code_new\\portfolio-lab']
+INFO:     Uvicorn running on http://0.0.0.0:8030 (Press CTRL+C to quit)
+INFO:     Started reloader process [43028] using WatchFiles
+INFO:     Started server process [40984]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:12752 - "POST /api/v1/risk/stress HTTP/1.1" 500 Internal Server Error
+WARNING:  WatchFiles detected changes in 'app\services\interpolation_service.py'. Reloading...
+INFO:     127.0.0.1:12793 - "POST /api/v1/risk/stress HTTP/1.1" 500 Internal Server Error

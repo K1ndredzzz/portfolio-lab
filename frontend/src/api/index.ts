@@ -17,7 +17,7 @@ if (import.meta.env.PROD && API_BASE_URL.startsWith('http://')) {
 
 const api = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 10000,
+  timeout: 60000, // 60 seconds for complex interpolation calculations
   headers: {
     'Content-Type': 'application/json',
   },
@@ -54,12 +54,12 @@ export const getPortfolioQuote = async (
 
 // Monte Carlo Simulation
 export const getMonteCarlo = async (
-  model: 'risk_parity' | 'max_sharpe' | 'min_variance',
+  weights: PortfolioWeights,
   horizon_months: number,
   signal?: AbortSignal
 ): Promise<MonteCarloResponse> => {
   const response = await api.post('/risk/monte-carlo', {
-    model,
+    weights,
     horizon_months,
   }, { signal });
   return response.data;
@@ -67,11 +67,11 @@ export const getMonteCarlo = async (
 
 // Stress Test
 export const getStressTest = async (
-  model: 'risk_parity' | 'max_sharpe' | 'min_variance',
+  weights: PortfolioWeights,
   signal?: AbortSignal
 ): Promise<StressTestResult[]> => {
   const response = await api.post('/risk/stress', {
-    model,
+    weights,
   }, { signal });
   return response.data;
 };

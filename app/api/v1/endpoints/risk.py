@@ -19,6 +19,7 @@ from app.schemas.risk import (
     CovarianceRequest,
     CovarianceResponse
 )
+from app.services.interpolation_service import get_interpolator
 
 router = APIRouter()
 
@@ -31,49 +32,29 @@ async def get_monte_carlo_simulation(
     """
     Get Monte Carlo simulation results for a portfolio.
 
-    Returns distribution of potential returns over specified horizon.
+    Uses interpolation from precomputed lookup table for fast response.
     """
     try:
-        # Load Monte Carlo data from parquet (temporary solution)
-        mc_df = pd.read_parquet('data/monte_carlo.parquet')
-
-        # Filter by model and horizon
-        filtered = mc_df[
-            (mc_df['model'] == request.model) &
-            (mc_df['horizon_months'] == request.horizon_months)
-        ]
-
-        if filtered.empty:
-            raise HTTPException(
-                status_code=404,
-                detail=f"No Monte Carlo data found for model={request.model}, horizon={request.horizon_months}"
-            )
-
-        # Extract percentiles
-        percentile_data = filtered[filtered['stat_type'] == 'percentile']
-        distribution = {
-            f"p{int(row['percentile'])}": float(row['return_value'])
-            for _, row in percentile_data.iterrows()
-        }
-
-        # Extract mean and std
-        mean_row = filtered[filtered['stat_type'] == 'mean'].iloc[0]
-        std_row = filtered[filtered['stat_type'] == 'std'].iloc[0]
+        interpolator = get_interpolator()
+        result = interpolator.interpolate_monte_carlo(
+            request.weights,
+            request.horizon_months
+        )
 
         return MonteCarloResponse(
-            model=request.model,
+            model="custom",  # User's custom weights
             horizon_months=request.horizon_months,
             n_simulations=10000,
-            mean_return=float(mean_row['return_value']),
-            std_return=float(std_row['return_value']),
-            distribution=distribution,
-            as_of_date=str(filtered.iloc[0]['as_of_date'])
+            mean_return=result['mean_return'],
+            std_return=result['std_return'],
+            distribution=result['distribution'],
+            as_of_date="2025-12-31"
         )
 
     except FileNotFoundError:
         raise HTTPException(
             status_code=503,
-            detail="Monte Carlo data not available. Please run computation tasks first."
+            detail="Monte Carlo lookup table not available. Please run computation tasks first."
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -87,37 +68,26 @@ async def get_stress_test_results(
     """
     Get stress test results for a portfolio.
 
-    Returns portfolio performance under historical crisis scenarios.
+    Uses interpolation from precomputed lookup table for fast response.
     """
     try:
-        # Load stress test data from parquet (temporary solution)
-        stress_df = pd.read_parquet('data/stress_tests.parquet')
+        interpolator = get_interpolator()
+        results = interpolator.interpolate_stress_test(request.weights)
 
-        # Filter by model
-        filtered = stress_df[stress_df['model'] == request.model]
-
-        if filtered.empty:
-            raise HTTPException(
-                status_code=404,
-                detail=f"No stress test data found for model={request.model}"
+        return [
+            StressTestResponse(
+                scenario_name=r['scenario_name'],
+                scenario_description=r['scenario_description'],
+                portfolio_return=r['portfolio_return'],
+                as_of_date="2025-12-31"
             )
-
-        # Convert to response format
-        results = []
-        for _, row in filtered.iterrows():
-            results.append(StressTestResponse(
-                scenario_name=row['scenario_name'],
-                scenario_description=row['scenario_description'],
-                portfolio_return=float(row['portfolio_return']),
-                as_of_date=str(row['as_of_date'])
-            ))
-
-        return results
+            for r in results
+        ]
 
     except FileNotFoundError:
         raise HTTPException(
             status_code=503,
-            detail="Stress test data not available. Please run computation tasks first."
+            detail="Stress test lookup table not available. Please run computation tasks first."
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

@@ -23,6 +23,9 @@ const PortfolioBuilder: React.FC = () => {
   const [totalWeight, setTotalWeight] = useState(0);
   const abortControllerRef = useRef<AbortController | null>(null);
 
+  // Serialize weights for dependency tracking
+  const weightsKey = JSON.stringify(weights);
+
   useEffect(() => {
     // Load assets on mount
     getAssets().then(setAssets).catch(console.error);
@@ -84,8 +87,7 @@ const PortfolioBuilder: React.FC = () => {
         abortControllerRef.current.abort();
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [totalWeight, model, as_of_date, horizon_months, weights]);
+  }, [totalWeight, model, as_of_date, horizon_months, weightsKey]);
 
   const handleWeightChange = (ticker: string, value: number) => {
     updateWeight(ticker, Math.max(0, Math.min(100, value)) / 100);

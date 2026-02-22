@@ -29,6 +29,9 @@ COPY --from=builder /opt/venv /opt/venv
 COPY app /app/app
 COPY data /app/data
 
+# Fix ownership
+RUN chown -R app:app /app
+
 EXPOSE 8000
 
 USER app
