@@ -35,7 +35,8 @@
       "Bash(gcloud compute instances create:*)",
       "Bash(gcloud compute scp:*)",
       "Bash(gcloud compute ssh:*)",
-      "Bash(gcloud compute instances delete:*)"
+      "Bash(gcloud compute instances delete:*)",
+      "Bash(git add:*)"
     ]
   }
 }

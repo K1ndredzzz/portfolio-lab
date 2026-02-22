@@ -158,3 +158,150 @@ INFO:     127.0.0.1:15237 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
 INFO:     127.0.0.1:15232 - "POST /api/v1/portfolios/quote HTTP/1.1" 200 OK
 INFO:     127.0.0.1:15238 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
 INFO:     127.0.0.1:15229 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17223 - "GET /api/v1/meta/assets HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17225 - "GET /api/v1/meta/assets HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17229 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17231 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+Redis get error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis set error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+INFO:     127.0.0.1:17234 - "POST /api/v1/portfolios/quote HTTP/1.1" 200 OK
+Redis get error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis set error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis get error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis set error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+INFO:     127.0.0.1:17265 - "POST /api/v1/portfolios/quote HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17261 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17241 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17262 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17244 - "POST /api/v1/portfolios/quote HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17240 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17316 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17314 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17322 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17320 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17326 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17328 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17334 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17332 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17340 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17338 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17344 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17346 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17352 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17350 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+Redis get error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis set error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+INFO:     127.0.0.1:17355 - "POST /api/v1/portfolios/quote HTTP/1.1" 200 OK
+Redis get error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis set error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis get error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis set error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+INFO:     127.0.0.1:17380 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17559 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17546 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17386 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17528 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17504 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17590 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17541 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17391 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17648 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17554 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17488 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17506 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17542 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17524 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17440 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17667 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17571 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17457 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17482 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17516 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17451 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17578 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17428 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17518 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17510 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17398 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17630 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17662 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17433 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17523 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17552 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17654 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17378 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17560 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17600 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17656 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17572 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17421 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17415 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+Redis get error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+Redis set error: Error 10061 connecting to localhost:8033. 由于目标计算机积极拒绝，无法连接。.
+INFO:     127.0.0.1:17462 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17434 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17464 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17668 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17422 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17374 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17594 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17498 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17470 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17481 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17452 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17458 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17612 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17643 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17368 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17384 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17583 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17564 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17638 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17606 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17678 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17626 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17494 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17661 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17677 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17427 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17588 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17416 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17672 - "POST /api/v1/portfolios/quote HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17408 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17536 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17614 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17476 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17468 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17608 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17548 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17373 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17681 - "POST /api/v1/portfolios/quote HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17362 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17367 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17632 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17445 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17577 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17446 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17637 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17624 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17392 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17530 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17500 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17396 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17566 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17644 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17401 - "POST /api/v1/portfolios/quote HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17534 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17602 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17493 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17512 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17596 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17439 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17410 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17361 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17475 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17486 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17618 - "POST /api/v1/risk/monte-carlo HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17584 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17620 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:17650 - "POST /api/v1/risk/stress HTTP/1.1" 200 OK
