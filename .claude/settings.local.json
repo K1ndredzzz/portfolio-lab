@@ -36,7 +36,11 @@
       "Bash(gcloud compute scp:*)",
       "Bash(gcloud compute ssh:*)",
       "Bash(gcloud compute instances delete:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git tag:*)",
+      "Bash(git push:*)",
+      "Bash(docker ps:*)"
     ]
   }
 }
