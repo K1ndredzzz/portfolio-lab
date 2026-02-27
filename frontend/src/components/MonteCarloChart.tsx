@@ -106,52 +106,82 @@ const MonteCarloChart: React.FC = () => {
       type: 'scatter',
       mode: 'lines+markers',
       name: 'Return Distribution',
-      line: { color: '#007bff', width: 3 },
-      marker: { size: 8 },
+      line: { color: '#3B82F6', width: 3 },
+      marker: { size: 8, color: '#60A5FA', line: { color: '#2563EB', width: 1 } },
       fill: 'tozeroy',
-      fillcolor: 'rgba(0, 123, 255, 0.1)',
+      fillcolor: 'rgba(59, 130, 246, 0.15)',
     },
   ];
 
   const layout = {
-    title: `Monte Carlo Simulation (${horizon_months} months, ${monteCarlo.n_simulations.toLocaleString()} paths)`,
+    title: {
+      text: `Monte Carlo Simulation (${horizon_months} months, ${monteCarlo.n_simulations.toLocaleString()} paths)`,
+      font: { color: '#F3F4F6', family: 'Inter, sans-serif' }
+    },
+    paper_bgcolor: 'transparent',
+    plot_bgcolor: 'transparent',
+    font: {
+      color: '#9CA3AF',
+      family: 'Inter, sans-serif'
+    },
     xaxis: {
       title: 'Percentile',
       ticksuffix: 'th',
+      gridcolor: '#374151',
     },
     yaxis: {
       title: 'Return (%)',
       tickformat: '.1f',
+      gridcolor: '#374151',
+      zeroline: true,
+      zerolinecolor: '#9CA3AF',
+      zerolinewidth: 2,
     },
     hovermode: 'closest',
     showlegend: false,
+    margin: { t: 60, r: 20, l: 60, b: 60 },
     annotations: [
       {
         x: 5,
         y: monteCarlo.distribution.p5 * 100,
         text: `5th: ${(monteCarlo.distribution.p5 * 100).toFixed(1)}%`,
         showarrow: true,
+        arrowcolor: '#9CA3AF',
+        font: { color: '#F3F4F6', size: 11 },
         arrowhead: 2,
         ax: -40,
         ay: -40,
+        bgcolor: 'rgba(17, 24, 39, 0.8)',
+        borderpad: 4,
+        bordercolor: '#374151'
       },
       {
         x: 50,
         y: monteCarlo.distribution.p50 * 100,
         text: `Median: ${(monteCarlo.distribution.p50 * 100).toFixed(1)}%`,
         showarrow: true,
+        arrowcolor: '#9CA3AF',
+        font: { color: '#F3F4F6', size: 11 },
         arrowhead: 2,
         ax: 0,
         ay: -50,
+        bgcolor: 'rgba(17, 24, 39, 0.8)',
+        borderpad: 4,
+        bordercolor: '#374151'
       },
       {
         x: 95,
         y: monteCarlo.distribution.p95 * 100,
         text: `95th: ${(monteCarlo.distribution.p95 * 100).toFixed(1)}%`,
         showarrow: true,
+        arrowcolor: '#9CA3AF',
+        font: { color: '#F3F4F6', size: 11 },
         arrowhead: 2,
         ax: 40,
         ay: -40,
+        bgcolor: 'rgba(17, 24, 39, 0.8)',
+        borderpad: 4,
+        bordercolor: '#374151'
       },
     ],
   };
@@ -175,16 +205,16 @@ const MonteCarloChart: React.FC = () => {
       <Plot
         data={data as any}
         layout={layout as any}
-        config={{ responsive: true }}
+        config={{ responsive: true, displayModeBar: false }}
         style={{ width: '100%', height: '500px' }}
       />
 
       <style>{`
         .monte-carlo-chart {
-          padding: 20px;
-          background: white;
-          border-radius: 8px;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+          padding: 32px;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
         }
 
         .monte-carlo-chart.loading,
@@ -193,41 +223,50 @@ const MonteCarloChart: React.FC = () => {
           justify-content: center;
           align-items: center;
           min-height: 400px;
-          color: #666;
+          color: var(--text-secondary);
         }
 
         .chart-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-bottom: 20px;
+          margin-bottom: 24px;
         }
 
         .chart-header h2 {
           margin: 0;
-          font-size: 24px;
+          font-size: 20px;
+          font-weight: 600;
+          color: var(--text-primary);
         }
 
         .stats {
           display: flex;
-          gap: 20px;
+          gap: 24px;
         }
 
         .stat {
           display: flex;
           flex-direction: column;
           align-items: flex-end;
+          background: rgba(255, 255, 255, 0.03);
+          padding: 8px 16px;
+          border-radius: 8px;
+          border: 1px solid var(--border-color);
         }
 
         .stat .label {
-          font-size: 12px;
-          color: #666;
+          font-size: 11px;
+          color: var(--text-secondary);
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          margin-bottom: 4px;
         }
 
         .stat .value {
           font-size: 18px;
-          font-weight: bold;
-          color: #007bff;
+          font-weight: 700;
+          color: var(--accent-blue);
         }
       `}</style>
     </div>

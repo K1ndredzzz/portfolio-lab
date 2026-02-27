@@ -184,27 +184,29 @@ const PortfolioBuilder: React.FC = () => {
 
       <style>{`
         .portfolio-builder {
-          padding: 20px;
-          background: white;
-          border-radius: 8px;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+          padding: 32px;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
         }
 
         .builder-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-bottom: 20px;
+          margin-bottom: 24px;
         }
 
         .builder-header h2 {
           margin: 0;
-          font-size: 24px;
+          font-size: 20px;
+          font-weight: 600;
+          color: var(--text-primary);
         }
 
         .controls {
           display: flex;
-          gap: 10px;
+          gap: 12px;
         }
 
         .sr-only {
@@ -219,108 +221,223 @@ const PortfolioBuilder: React.FC = () => {
         }
 
         .controls select {
-          padding: 8px 12px;
-          border: 1px solid #ddd;
-          border-radius: 4px;
+          padding: 8px 16px;
+          background-color: rgba(255, 255, 255, 0.05);
+          border: 1px solid var(--border-color);
+          border-radius: 6px;
           font-size: 14px;
+          color: var(--text-primary);
+          cursor: pointer;
+          transition: all 0.2s;
+          outline: none;
+        }
+
+        .controls select:hover, .controls select:focus {
+          border-color: var(--accent-blue);
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .controls select option {
+          background-color: var(--bg-panel);
+          color: var(--text-primary);
         }
 
         .weight-summary {
           display: flex;
-          gap: 10px;
+          gap: 12px;
           align-items: center;
-          margin-bottom: 20px;
-          padding: 12px;
-          background: #f5f5f5;
-          border-radius: 4px;
+          margin-bottom: 24px;
+          padding: 16px;
+          background: rgba(255, 255, 255, 0.02);
+          border: 1px solid var(--border-color);
+          border-radius: 8px;
         }
 
         .total-weight {
-          font-size: 18px;
-          font-weight: bold;
-          padding: 4px 12px;
-          border-radius: 4px;
+          font-size: 16px;
+          font-weight: 600;
+          padding: 6px 16px;
+          border-radius: 6px;
+          margin-right: auto;
         }
 
         .total-weight.ok {
-          background: #d4edda;
-          color: #155724;
+          background: rgba(16, 185, 129, 0.1);
+          color: var(--accent-green);
+          border: 1px solid rgba(16, 185, 129, 0.2);
         }
 
         .total-weight.over {
-          background: #f8d7da;
-          color: #721c24;
+          background: rgba(239, 68, 68, 0.1);
+          color: var(--danger);
+          border: 1px solid rgba(239, 68, 68, 0.2);
         }
 
         .total-weight.under {
-          background: #fff3cd;
-          color: #856404;
+          background: rgba(245, 158, 11, 0.1);
+          color: var(--warning);
+          border: 1px solid rgba(245, 158, 11, 0.2);
         }
 
         .weight-summary button {
-          padding: 8px 16px;
+          padding: 8px 20px;
           border: none;
-          border-radius: 4px;
-          background: #007bff;
-          color: white;
-          cursor: pointer;
+          border-radius: 6px;
           font-size: 14px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.2s;
         }
 
-        .weight-summary button:hover {
-          background: #0056b3;
+        .weight-summary button:first-of-type {
+          background: var(--accent-blue);
+          color: white;
+        }
+
+        .weight-summary button:first-of-type:hover:not(:disabled) {
+          background: #2563EB;
+          box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .weight-summary button:last-of-type {
+          background: transparent;
+          border: 1px solid var(--border-color);
+          color: var(--text-secondary);
+        }
+
+        .weight-summary button:last-of-type:hover {
+          background: rgba(255, 255, 255, 0.05);
+          color: var(--text-primary);
         }
 
         .weight-summary button:disabled {
-          background: #ccc;
+          background: rgba(255, 255, 255, 0.1);
+          color: var(--text-secondary);
           cursor: not-allowed;
+          box-shadow: none;
         }
 
         .assets-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
           gap: 16px;
+          overflow-y: auto;
+          flex: 1;
+          padding-right: 8px;
+        }
+
+        .assets-grid::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        .assets-grid::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.02);
+          border-radius: 4px;
+        }
+
+        .assets-grid::-webkit-scrollbar-thumb {
+          background: var(--border-color);
+          border-radius: 4px;
+        }
+
+        .assets-grid::-webkit-scrollbar-thumb:hover {
+          background: #4B5563;
         }
 
         .asset-card {
-          padding: 16px;
-          border: 1px solid #ddd;
-          border-radius: 4px;
-          background: #fafafa;
+          padding: 20px;
+          border: 1px solid var(--border-color);
+          border-radius: 12px;
+          background: rgba(255, 255, 255, 0.02);
+          transition: all 0.2s ease;
+        }
+
+        .asset-card:hover {
+          background: rgba(255, 255, 255, 0.04);
+          border-color: rgba(255, 255, 255, 0.15);
         }
 
         .asset-header {
           display: flex;
           justify-content: space-between;
-          margin-bottom: 12px;
+          align-items: center;
+          margin-bottom: 16px;
         }
 
         .ticker {
-          font-weight: bold;
+          font-weight: 700;
           font-size: 16px;
+          color: var(--text-primary);
+          background: rgba(255, 255, 255, 0.1);
+          padding: 4px 10px;
+          border-radius: 4px;
+          letter-spacing: 0.5px;
         }
 
         .name {
-          font-size: 12px;
-          color: #666;
+          font-size: 13px;
+          color: var(--text-secondary);
+          text-align: right;
+          max-width: 60%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
 
         .weight-control {
           display: flex;
           align-items: center;
-          gap: 8px;
+          gap: 12px;
         }
 
         .weight-control input[type="range"] {
           flex: 1;
+          -webkit-appearance: none;
+          height: 4px;
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 2px;
+          outline: none;
+        }
+
+        .weight-control input[type="range"]::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          background: var(--accent-green);
+          cursor: pointer;
+          transition: all 0.2s;
+          box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+        }
+
+        .weight-control input[type="range"]::-webkit-slider-thumb:hover {
+          transform: scale(1.2);
+          box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
         }
 
         .weight-input {
-          width: 60px;
-          padding: 4px 8px;
-          border: 1px solid #ddd;
-          border-radius: 4px;
+          width: 64px;
+          padding: 6px 8px;
+          background: rgba(0, 0, 0, 0.2);
+          border: 1px solid var(--border-color);
+          border-radius: 6px;
           text-align: right;
+          color: var(--text-primary);
+          font-size: 14px;
+          font-family: monospace;
+          outline: none;
+          transition: all 0.2s;
+        }
+
+        .weight-input:focus {
+          border-color: var(--accent-green);
+          box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+        }
+
+        .weight-control span {
+          color: var(--text-secondary);
+          font-weight: 600;
         }
       `}</style>
     </div>

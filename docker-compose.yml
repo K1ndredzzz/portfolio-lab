@@ -1,6 +1,6 @@
 services:
   backend:
-    image: fuzhouxing/portfolio-lab-backend:v1.1.0
+    image: fuzhouxing/portfolio-lab-backend:latest
     container_name: portfolio-lab-backend
     restart: unless-stopped
     ports:
@@ -18,7 +18,7 @@ services:
       redis:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/health/live', timeout=2)"]
+      test: [ "CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/health/live', timeout=2)" ]
       interval: 15s
       timeout: 3s
       retries: 5
@@ -40,7 +40,7 @@ services:
       - pg_data:/var/lib/postgresql/data
       - ./sql:/docker-entrypoint-initdb.d:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U portfolio -d portfolio_lab"]
+      test: [ "CMD-SHELL", "pg_isready -U portfolio -d portfolio_lab" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -54,16 +54,9 @@ services:
     restart: unless-stopped
     ports:
       - "8033:6379"
-    command:
-      [
-        "redis-server",
-        "--appendonly", "no",
-        "--save", "",
-        "--maxmemory", "256mb",
-        "--maxmemory-policy", "allkeys-lru"
-      ]
+    command: [ "redis-server", "--appendonly", "no", "--save", "", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru" ]
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: [ "CMD", "redis-cli", "ping" ]
       interval: 10s
       timeout: 3s
       retries: 5
@@ -72,7 +65,7 @@ services:
       - portfolio_net
 
   frontend:
-    image: fuzhouxing/portfolio-lab-frontend:v1.1.0
+    image: fuzhouxing/portfolio-lab-frontend:latest
     container_name: portfolio-lab-frontend
     restart: unless-stopped
     ports:
@@ -81,7 +74,7 @@ services:
       backend:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80"]
+      test: [ "CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80" ]
       interval: 15s
       timeout: 3s
       retries: 5

@@ -9,7 +9,7 @@ const RiskDashboard: React.FC = () => {
   if (isLoadingMetrics) {
     return (
       <div className="risk-dashboard loading" aria-busy="true" aria-label="Loading risk metrics">
-        <div className="spinner">Loading...</div>
+        <div className="spinner"></div>
       </div>
     );
   }
@@ -25,7 +25,13 @@ const RiskDashboard: React.FC = () => {
   if (!metrics) {
     return (
       <div className="risk-dashboard empty" role="status">
-        <p>Configure your portfolio to see risk metrics</p>
+        <div className="empty-state">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+            <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+          </svg>
+          <p>Configure your portfolio to see risk metrics</p>
+        </div>
       </div>
     );
   }
@@ -37,63 +43,65 @@ const RiskDashboard: React.FC = () => {
     {
       label: 'Expected Return',
       value: formatPercent(metrics.expected_return_ann),
-      color: metrics.expected_return_ann > 0 ? '#28a745' : '#dc3545',
+      color: metrics.expected_return_ann > 0 ? 'var(--accent-green)' : 'var(--danger)',
     },
     {
       label: 'Volatility',
       value: formatPercent(metrics.volatility_ann),
-      color: '#6c757d',
+      color: 'var(--text-primary)',
     },
     {
       label: 'Sharpe Ratio',
       value: formatRatio(metrics.sharpe),
-      color: metrics.sharpe > 1 ? '#28a745' : metrics.sharpe > 0.5 ? '#b7791f' : '#dc3545',
+      color: metrics.sharpe > 1 ? 'var(--accent-green)' : metrics.sharpe > 0.5 ? 'var(--warning)' : 'var(--danger)',
     },
     {
       label: 'Sortino Ratio',
       value: formatRatio(metrics.sortino),
-      color: metrics.sortino > 1 ? '#28a745' : metrics.sortino > 0.5 ? '#b7791f' : '#dc3545',
+      color: metrics.sortino > 1 ? 'var(--accent-green)' : metrics.sortino > 0.5 ? 'var(--warning)' : 'var(--danger)',
     },
     {
       label: 'VaR (95%)',
       value: formatPercent(metrics.var95),
-      color: '#dc3545',
+      color: 'var(--danger)',
     },
     {
       label: 'VaR (99%)',
       value: formatPercent(metrics.var99),
-      color: '#dc3545',
+      color: 'var(--danger)',
     },
     {
       label: 'CVaR (95%)',
       value: formatPercent(metrics.cvar95),
-      color: '#dc3545',
+      color: 'var(--danger)',
     },
     {
       label: 'CVaR (99%)',
       value: formatPercent(metrics.cvar99),
-      color: '#dc3545',
+      color: 'var(--danger)',
     },
     {
       label: 'Max Drawdown',
       value: formatPercent(metrics.max_drawdown),
-      color: '#dc3545',
+      color: 'var(--danger)',
     },
     {
       label: 'Calmar Ratio',
       value: formatRatio(metrics.calmar),
-      color: metrics.calmar > 0.5 ? '#28a745' : '#b7791f',
+      color: metrics.calmar > 0.5 ? 'var(--accent-green)' : 'var(--warning)',
     },
   ];
 
   return (
     <div className="risk-dashboard">
-      <h2>Risk Metrics</h2>
+      <div className="dashboard-header">
+        <h2>Risk Metrics</h2>
+      </div>
       <div className="kpi-grid">
         {kpis.map((kpi) => (
           <div key={kpi.label} className="kpi-card">
             <div className="kpi-label">{kpi.label}</div>
-            <div className="kpi-value" style={{ color: kpi.color }}>
+            <div className="kpi-value" style={{ color: kpi.color, textShadow: `0 0 20px ${kpi.color}22` }}>
               {kpi.value}
             </div>
           </div>
@@ -102,60 +110,92 @@ const RiskDashboard: React.FC = () => {
 
       <style>{`
         .risk-dashboard {
-          padding: 20px;
-          background: white;
-          border-radius: 8px;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .risk-dashboard.loading,
-        .risk-dashboard.empty {
+          padding: 32px;
+          height: 100%;
           display: flex;
-          justify-content: center;
-          align-items: center;
-          min-height: 200px;
-          color: #666;
+          flex-direction: column;
         }
 
-        .spinner {
-          font-size: 18px;
+        .dashboard-header {
+          margin-bottom: 24px;
         }
 
         .risk-dashboard h2 {
-          margin: 0 0 20px 0;
-          font-size: 24px;
+          margin: 0;
+          font-size: 20px;
+          font-weight: 600;
+          color: var(--text-primary);
+        }
+
+        .risk-dashboard.loading,
+        .risk-dashboard.empty,
+        .risk-dashboard.error {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100%;
+          flex: 1;
+        }
+
+        .empty-state {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 16px;
+          color: var(--text-secondary);
+        }
+
+        .empty-state svg {
+          opacity: 0.5;
+        }
+
+        .error {
+          color: var(--danger);
+          background: rgba(239, 68, 68, 0.1);
+          padding: 16px;
+          border-radius: 8px;
+          border: 1px solid rgba(239, 68, 68, 0.2);
         }
 
         .kpi-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+          grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
           gap: 16px;
+          flex: 1;
         }
 
         .kpi-card {
-          padding: 16px;
-          border: 1px solid #e0e0e0;
-          border-radius: 8px;
-          background: #fafafa;
-          transition: transform 0.2s, box-shadow 0.2s;
+          padding: 20px;
+          border: 1px solid var(--border-color);
+          border-radius: 12px;
+          background: rgba(255, 255, 255, 0.02);
+          transition: all 0.2s ease;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
         }
 
         .kpi-card:hover {
           transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+          background: rgba(255, 255, 255, 0.04);
+          border-color: rgba(255, 255, 255, 0.2);
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
 
         .kpi-label {
-          font-size: 12px;
-          color: #666;
+          font-size: 11px;
+          color: var(--text-secondary);
           margin-bottom: 8px;
           text-transform: uppercase;
-          letter-spacing: 0.5px;
+          letter-spacing: 1px;
+          font-weight: 600;
         }
 
         .kpi-value {
-          font-size: 24px;
-          font-weight: bold;
+          font-size: 28px;
+          font-weight: 700;
+          letter-spacing: -0.5px;
+          line-height: 1.2;
         }
       `}</style>
     </div>

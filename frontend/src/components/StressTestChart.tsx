@@ -95,27 +95,47 @@ const StressTestChart: React.FC = () => {
       y: stressTests.map((t) => t.portfolio_return * 100),
       type: 'bar',
       marker: {
-        color: stressTests.map((t) => (t.portfolio_return < 0 ? '#dc3545' : '#28a745')),
+        color: stressTests.map((t) => (t.portfolio_return < 0 ? '#EF4444' : '#10B981')),
+        line: {
+          color: stressTests.map((t) => (t.portfolio_return < 0 ? '#B91C1C' : '#059669')),
+          width: 1,
+        }
       },
       text: stressTests.map((t) => `${(t.portfolio_return * 100).toFixed(2)}%`),
       textposition: 'outside',
+      textfont: {
+        color: '#F3F4F6'
+      }
     },
   ];
 
   const layout = {
-    title: 'Stress Test Results',
+    title: {
+      text: 'Stress Test Results',
+      font: { color: '#F3F4F6', family: 'Inter, sans-serif' }
+    },
+    paper_bgcolor: 'transparent',
+    plot_bgcolor: 'transparent',
+    font: {
+      color: '#9CA3AF',
+      family: 'Inter, sans-serif'
+    },
     xaxis: {
       title: 'Crisis Scenario',
+      gridcolor: '#374151',
+      tickangle: -45,
     },
     yaxis: {
       title: 'Portfolio Return (%)',
       tickformat: '.1f',
+      gridcolor: '#374151',
       zeroline: true,
-      zerolinecolor: '#666',
+      zerolinecolor: '#9CA3AF',
       zerolinewidth: 2,
     },
     hovermode: 'closest',
     showlegend: false,
+    margin: { t: 60, r: 20, l: 60, b: 100 }
   };
 
   return (
@@ -144,7 +164,7 @@ const StressTestChart: React.FC = () => {
       <Plot
         data={data as any}
         layout={layout as any}
-        config={{ responsive: true }}
+        config={{ responsive: true, displayModeBar: false }}
         style={{ width: '100%', height: '400px' }}
       />
 
@@ -164,10 +184,10 @@ const StressTestChart: React.FC = () => {
 
       <style>{`
         .stress-test-chart {
-          padding: 20px;
-          background: white;
-          border-radius: 8px;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+          padding: 32px;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
         }
 
         .stress-test-chart.loading,
@@ -176,89 +196,112 @@ const StressTestChart: React.FC = () => {
           justify-content: center;
           align-items: center;
           min-height: 400px;
-          color: #666;
+          color: var(--text-secondary);
         }
 
         .chart-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-bottom: 20px;
+          margin-bottom: 24px;
         }
 
         .chart-header h2 {
           margin: 0;
-          font-size: 24px;
+          font-size: 20px;
+          font-weight: 600;
+          color: var(--text-primary);
         }
 
         .summary {
           display: flex;
-          gap: 20px;
+          gap: 24px;
         }
 
         .stat {
           display: flex;
           flex-direction: column;
           align-items: flex-end;
+          background: rgba(255, 255, 255, 0.03);
+          padding: 8px 16px;
+          border-radius: 8px;
+          border: 1px solid var(--border-color);
         }
 
         .stat .label {
-          font-size: 12px;
-          color: #666;
+          font-size: 11px;
+          color: var(--text-secondary);
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          margin-bottom: 4px;
         }
 
         .stat .value {
           font-size: 18px;
-          font-weight: bold;
-          color: #007bff;
+          font-weight: 700;
+          color: var(--text-primary);
         }
 
         .stat .value.worst {
-          color: #dc3545;
+          color: var(--danger);
         }
 
         .scenarios-detail {
-          margin-top: 20px;
+          margin-top: 32px;
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
           gap: 16px;
         }
 
         .scenario-card {
           padding: 16px;
-          border: 1px solid #e0e0e0;
+          border: 1px solid var(--border-color);
           border-radius: 8px;
-          background: #fafafa;
+          background: rgba(255, 255, 255, 0.02);
+          transition: all 0.2s;
+        }
+
+        .scenario-card:hover {
+          background: rgba(255, 255, 255, 0.04);
+          border-color: rgba(255, 255, 255, 0.15);
         }
 
         .scenario-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-bottom: 8px;
+          margin-bottom: 12px;
         }
 
         .scenario-header h4 {
           margin: 0;
-          font-size: 16px;
+          font-size: fourteenpx;
+          color: var(--text-primary);
+          line-height: 1.4;
+          font-weight: 500;
         }
 
         .return {
-          font-size: 20px;
-          font-weight: bold;
+          font-size: 16px;
+          font-weight: 700;
+          padding: 4px 8px;
+          border-radius: 4px;
+          background: rgba(0, 0, 0, 0.2);
         }
 
         .return.negative {
-          color: #dc3545;
+          color: var(--danger);
+          border: 1px solid rgba(239, 68, 68, 0.2);
         }
 
         .return.positive {
-          color: #28a745;
+          color: var(--accent-green);
+          border: 1px solid rgba(16, 185, 129, 0.2);
         }
 
         .scenario-date {
           font-size: 12px;
-          color: #666;
+          color: var(--text-secondary);
         }
       `}</style>
     </div>
