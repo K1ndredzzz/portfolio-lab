@@ -2,6 +2,7 @@ import axios from 'axios';
 import type {
   Asset,
   PortfolioQuoteResponse,
+  PortfolioOptimizeResponse,
   MonteCarloResponse,
   StressTestResult,
   CovarianceResponse,
@@ -52,15 +53,34 @@ export const getPortfolioQuote = async (
   return response.data;
 };
 
+// Portfolio Optimize — compute optimal weights from selected tickers + strategy
+export const optimizePortfolio = async (
+  model: 'risk_parity' | 'max_sharpe' | 'min_variance',
+  as_of_date: string,
+  horizon_months: number,
+  tickers: string[],
+  signal?: AbortSignal
+): Promise<PortfolioOptimizeResponse> => {
+  const response = await api.post('/portfolios/optimize', {
+    model,
+    as_of_date,
+    horizon_months,
+    tickers,
+  }, { signal });
+  return response.data;
+};
+
 // Monte Carlo Simulation
 export const getMonteCarlo = async (
   weights: PortfolioWeights,
   horizon_months: number,
+  as_of_date: string,
   signal?: AbortSignal
 ): Promise<MonteCarloResponse> => {
   const response = await api.post('/risk/monte-carlo', {
     weights,
     horizon_months,
+    as_of_date,
   }, { signal });
   return response.data;
 };

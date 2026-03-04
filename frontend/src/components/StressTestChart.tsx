@@ -161,6 +161,12 @@ const StressTestChart: React.FC = () => {
         </div>
       </div>
 
+      <div className="stress-context-note">
+        ℹ Stress tests apply current portfolio weights to fixed historical crisis shocks
+        (peak-to-trough drawdown per asset). Results are independent of your selected
+        lookback period and always reflect the full severity of each historical event.
+      </div>
+
       <Plot
         data={data as any}
         layout={layout as any}
@@ -302,6 +308,17 @@ const StressTestChart: React.FC = () => {
         .scenario-date {
           font-size: 12px;
           color: var(--text-secondary);
+        }
+
+        .stress-context-note {
+          margin-bottom: 20px;
+          padding: 10px 14px;
+          font-size: 12px;
+          color: var(--text-secondary);
+          background: rgba(59,130,246,0.05);
+          border: 1px solid rgba(59,130,246,0.15);
+          border-radius: 8px;
+          line-height: 1.6;
         }
       `}</style>
     </div>

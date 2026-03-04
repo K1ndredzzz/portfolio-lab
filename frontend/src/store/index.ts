@@ -6,6 +6,11 @@ interface PortfolioStore {
   assets: Asset[];
   setAssets: (assets: Asset[]) => void;
 
+  // Asset Selection (for optimization)
+  selectedTickers: Set<string>;
+  toggleTicker: (ticker: string) => void;
+  setSelectedTickers: (tickers: string[]) => void;
+
   // Portfolio Configuration
   weights: PortfolioWeights;
   model: 'max_sharpe' | 'risk_parity' | 'min_variance';
@@ -21,11 +26,13 @@ interface PortfolioStore {
   isLoadingMetrics: boolean;
   isLoadingMonteCarlo: boolean;
   isLoadingStress: boolean;
+  isOptimizing: boolean;
 
   // Error States
   metricsError: string | null;
   monteCarloError: string | null;
   stressError: string | null;
+  optimizeError: string | null;
 
   // Actions
   setWeights: (weights: PortfolioWeights) => void;
@@ -39,15 +46,18 @@ interface PortfolioStore {
   setLoadingMetrics: (loading: boolean) => void;
   setLoadingMonteCarlo: (loading: boolean) => void;
   setLoadingStress: (loading: boolean) => void;
+  setIsOptimizing: (loading: boolean) => void;
   setMetricsError: (error: string | null) => void;
   setMonteCarloError: (error: string | null) => void;
   setStressError: (error: string | null) => void;
+  setOptimizeError: (error: string | null) => void;
   resetWeights: () => void;
 }
 
 export const usePortfolioStore = create<PortfolioStore>((set) => ({
   // Initial State
   assets: [],
+  selectedTickers: new Set<string>(),
   weights: {},
   model: 'risk_parity',
   horizon_months: 36,
@@ -58,12 +68,24 @@ export const usePortfolioStore = create<PortfolioStore>((set) => ({
   isLoadingMetrics: false,
   isLoadingMonteCarlo: false,
   isLoadingStress: false,
+  isOptimizing: false,
   metricsError: null,
   monteCarloError: null,
   stressError: null,
+  optimizeError: null,
 
   // Actions
   setAssets: (assets) => set({ assets }),
+
+  toggleTicker: (ticker) =>
+    set((state) => {
+      const next = new Set(state.selectedTickers);
+      if (next.has(ticker)) next.delete(ticker);
+      else next.add(ticker);
+      return { selectedTickers: next };
+    }),
+
+  setSelectedTickers: (tickers) => set({ selectedTickers: new Set(tickers) }),
 
   setWeights: (weights) => set({ weights }),
 
@@ -90,11 +112,15 @@ export const usePortfolioStore = create<PortfolioStore>((set) => ({
 
   setLoadingStress: (isLoadingStress) => set({ isLoadingStress }),
 
+  setIsOptimizing: (isOptimizing) => set({ isOptimizing }),
+
   setMetricsError: (metricsError) => set({ metricsError }),
 
   setMonteCarloError: (monteCarloError) => set({ monteCarloError }),
 
   setStressError: (stressError) => set({ stressError }),
 
-  resetWeights: () => set({ weights: {} }),
+  setOptimizeError: (optimizeError) => set({ optimizeError }),
+
+  resetWeights: () => set({ weights: {}, metrics: null, selectedTickers: new Set() }),
 }));

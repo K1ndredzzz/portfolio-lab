@@ -6,6 +6,7 @@ import { getMonteCarlo } from '../api';
 const MonteCarloChart: React.FC = () => {
   const weights = usePortfolioStore((state) => state.weights);
   const horizon_months = usePortfolioStore((state) => state.horizon_months);
+  const as_of_date = usePortfolioStore((state) => state.as_of_date);
   const monteCarlo = usePortfolioStore((state) => state.monteCarlo);
   const setMonteCarlo = usePortfolioStore((state) => state.setMonteCarlo);
   const isLoadingMonteCarlo = usePortfolioStore((state) => state.isLoadingMonteCarlo);
@@ -38,7 +39,7 @@ const MonteCarloChart: React.FC = () => {
       }
 
       try {
-        const data = await getMonteCarlo(weights, horizon_months, abortControllerRef.current.signal);
+        const data = await getMonteCarlo(weights, horizon_months, as_of_date, abortControllerRef.current.signal);
         if (isMounted) {
           setMonteCarlo(data);
         }
@@ -64,7 +65,7 @@ const MonteCarloChart: React.FC = () => {
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [weightsKey, horizon_months]);
+  }, [weightsKey, horizon_months, as_of_date]);
 
   if (isLoadingMonteCarlo) {
     return (

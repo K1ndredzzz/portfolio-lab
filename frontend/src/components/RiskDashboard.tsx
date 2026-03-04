@@ -42,51 +42,61 @@ const RiskDashboard: React.FC = () => {
   const kpis = [
     {
       label: 'Expected Return',
+      sublabel: 'Annualized',
       value: formatPercent(metrics.expected_return_ann),
       color: metrics.expected_return_ann > 0 ? 'var(--accent-green)' : 'var(--danger)',
     },
     {
       label: 'Volatility',
+      sublabel: 'Annualized',
       value: formatPercent(metrics.volatility_ann),
       color: 'var(--text-primary)',
     },
     {
       label: 'Sharpe Ratio',
+      sublabel: 'Ann. Return / Ann. Vol',
       value: formatRatio(metrics.sharpe),
       color: metrics.sharpe > 1 ? 'var(--accent-green)' : metrics.sharpe > 0.5 ? 'var(--warning)' : 'var(--danger)',
     },
     {
       label: 'Sortino Ratio',
+      sublabel: 'Ann. Excess / Downside',
       value: formatRatio(metrics.sortino),
       color: metrics.sortino > 1 ? 'var(--accent-green)' : metrics.sortino > 0.5 ? 'var(--warning)' : 'var(--danger)',
     },
     {
       label: 'VaR (95%)',
+      sublabel: 'Annualized',
       value: formatPercent(metrics.var95),
       color: 'var(--danger)',
     },
     {
       label: 'VaR (99%)',
+      sublabel: 'Annualized',
       value: formatPercent(metrics.var99),
       color: 'var(--danger)',
     },
     {
       label: 'CVaR (95%)',
+      sublabel: 'Annualized',
       value: formatPercent(metrics.cvar95),
       color: 'var(--danger)',
     },
     {
       label: 'CVaR (99%)',
+      sublabel: 'Annualized',
       value: formatPercent(metrics.cvar99),
       color: 'var(--danger)',
     },
     {
       label: 'Max Drawdown',
+      sublabel: 'Full History',
       value: formatPercent(metrics.max_drawdown),
       color: 'var(--danger)',
     },
     {
       label: 'Calmar Ratio',
+      sublabel: 'Ann. Return / |Max DD|',
       value: formatRatio(metrics.calmar),
       color: metrics.calmar > 0.5 ? 'var(--accent-green)' : 'var(--warning)',
     },
@@ -104,8 +114,15 @@ const RiskDashboard: React.FC = () => {
             <div className="kpi-value" style={{ color: kpi.color, textShadow: `0 0 20px ${kpi.color}22` }}>
               {kpi.value}
             </div>
+            {kpi.sublabel && (
+              <div className="kpi-sublabel">{kpi.sublabel}</div>
+            )}
           </div>
         ))}
+      </div>
+      <div className="metrics-note">
+        Computed from daily log-returns (5-yr rolling window, Ledoit-Wolf shrinkage).
+        VaR &amp; CVaR are annualized via √252 scaling of daily percentiles.
       </div>
 
       <style>{`
@@ -196,6 +213,26 @@ const RiskDashboard: React.FC = () => {
           font-weight: 700;
           letter-spacing: -0.5px;
           line-height: 1.2;
+        }
+
+        .kpi-sublabel {
+          font-size: 10px;
+          color: var(--text-secondary);
+          margin-top: 4px;
+          opacity: 0.7;
+          letter-spacing: 0.3px;
+        }
+
+        .metrics-note {
+          margin-top: 16px;
+          padding: 10px 14px;
+          font-size: 11px;
+          color: var(--text-secondary);
+          background: rgba(255,255,255,0.02);
+          border: 1px solid var(--border-color);
+          border-radius: 8px;
+          line-height: 1.6;
+          opacity: 0.8;
         }
       `}</style>
     </div>

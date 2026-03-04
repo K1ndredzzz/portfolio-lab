@@ -29,6 +29,13 @@ export interface PortfolioQuoteResponse {
   cache_hit: boolean;
 }
 
+export interface PortfolioOptimizeResponse {
+  model: string;
+  tickers: string[];
+  weights: PortfolioWeights;
+  metrics: RiskMetrics;
+}
+
 export interface MonteCarloResponse {
   model: string;
   horizon_months: number;

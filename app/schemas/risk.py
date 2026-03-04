@@ -48,6 +48,7 @@ class PortfolioQuoteResponse(BaseModel):
 class MonteCarloRequest(BaseModel):
     weights: Dict[str, float] = Field(..., min_length=1, description="Portfolio weights")
     horizon_months: int = Field(..., ge=12, le=60, description="Investment horizon in months")
+    as_of_date: str = Field(default="2025-12-31", description="Date for covariance snapshot")
 
     class Config:
         json_schema_extra = {
@@ -58,7 +59,8 @@ class MonteCarloRequest(BaseModel):
                     "GLD": 0.2,
                     "BTC": 0.2
                 },
-                "horizon_months": 36
+                "horizon_months": 36,
+                "as_of_date": "2025-12-31"
             }
         }
 

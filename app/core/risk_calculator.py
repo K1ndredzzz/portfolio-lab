@@ -3,8 +3,7 @@ Real-time portfolio risk metrics calculator.
 """
 import numpy as np
 import pandas as pd
-from typing import Dict, Optional
-from datetime import datetime
+from typing import Dict
 from pathlib import Path
 
 
@@ -19,7 +18,7 @@ class RiskCalculator:
         self._returns_data = None
 
     def _load_covariance_matrices(self):
-        """Load precomputed covariance matrices."""
+        """Load precomputed covariance matrices (already annualized *252)."""
         if self._cov_matrices is None:
             cov_file = self.data_dir / "covariance_matrices.npz"
             data = np.load(cov_file)
@@ -29,16 +28,16 @@ class RiskCalculator:
         return self._cov_matrices
 
     def _load_returns_data(self):
-        """Load historical returns for downside risk calculations."""
+        """Load historical log returns — same source as the covariance/MC pipeline."""
         if self._returns_data is None:
             prices_file = self.data_dir / "clean_prices.parquet"
             prices_df = pd.read_parquet(prices_file)
 
-            # Pivot from long format to wide format
-            prices_wide = prices_df.pivot(index='trade_date', columns='ticker', values='close')
-
-            # Calculate returns
-            returns_df = prices_wide.pct_change().dropna()
+            # Use the pre-computed log_return column (same as covariance script)
+            prices_df = prices_df[prices_df['log_return'].notna()].copy()
+            returns_df = prices_df.pivot(
+                index='trade_date', columns='ticker', values='log_return'
+            )
             self._returns_data = returns_df
         return self._returns_data
 
@@ -60,85 +59,84 @@ class RiskCalculator:
         """
         Calculate portfolio risk metrics.
 
-        Args:
-            weights: Dict of {ticker: weight}, weights should sum to 1.0
-            as_of_date: Date for covariance matrix (YYYY-MM-DD)
-            horizon_months: Investment horizon in months
-            risk_free_rate: Annual risk-free rate (default 2%)
-
-        Returns:
-            Dict of risk metrics
+        The covariance matrix stored in covariance_matrices.npz is already
+        annualized (multiplied by 252 during the rolling-covariance job).
+        Therefore portfolio_variance = w' @ Cov_ann @ w is already an
+        annualized variance — do NOT multiply by 252 again.
         """
-        # Load data
         self._load_covariance_matrices()
         self._load_returns_data()
 
-        # Get closest available date
+        # Closest covariance snapshot (already annualized)
         closest_date = self._get_closest_date(as_of_date)
-        cov_matrix = self._cov_matrices[closest_date]
+        cov_matrix_ann = self._cov_matrices[closest_date]
 
-        # Convert weights dict to array (aligned with tickers)
-        weight_array = np.array([weights.get(ticker, 0.0) for ticker in self._tickers])
-
-        # Normalize weights
+        # Weight vector aligned to tickers
+        weight_array = np.array([weights.get(t, 0.0) for t in self._tickers])
         weight_sum = weight_array.sum()
         if weight_sum > 0:
             weight_array = weight_array / weight_sum
 
-        # Calculate expected returns (using historical mean)
-        returns_df = self._returns_data
-        mean_returns = returns_df.mean().values
+        # ── Expected returns ─────────────────────────────────────────────────
+        # log_return daily mean → annualize by *252  (matches MC pipeline)
+        aligned = self._returns_data.reindex(columns=self._tickers).fillna(0.0)
+        annual_log_returns = aligned.mean().values * 252      # shape: (n_tickers,)
+        portfolio_return = float(np.dot(weight_array, annual_log_returns))
 
-        # Portfolio expected return (annualized)
-        portfolio_return = np.dot(weight_array, mean_returns) * 252
+        # ── Volatility ───────────────────────────────────────────────────────
+        # Cov already annualized → just sqrt, no extra *252
+        portfolio_variance_ann = float(np.dot(weight_array, cov_matrix_ann @ weight_array))
+        portfolio_volatility = float(np.sqrt(max(portfolio_variance_ann, 0.0)))
 
-        # Portfolio volatility (annualized)
-        portfolio_variance = np.dot(weight_array, np.dot(cov_matrix, weight_array))
-        portfolio_volatility = np.sqrt(portfolio_variance * 252)
+        # ── Sharpe ───────────────────────────────────────────────────────────
+        sharpe = (
+            (portfolio_return - risk_free_rate) / portfolio_volatility
+            if portfolio_volatility > 1e-10 else 0.0
+        )
 
-        # Sharpe Ratio
-        sharpe = (portfolio_return - risk_free_rate) / portfolio_volatility if portfolio_volatility > 0 else 0.0
+        # ── Downside metrics (daily log returns) ─────────────────────────────
+        daily_port = (aligned * weight_array).sum(axis=1)
+        rf_daily = risk_free_rate / 252
+        downside = daily_port[daily_port < rf_daily]
+        downside_std = (
+            float(downside.std() * np.sqrt(252)) if len(downside) > 1
+            else portfolio_volatility
+        )
+        sortino = (
+            (portfolio_return - risk_free_rate) / downside_std
+            if downside_std > 1e-10 else 0.0
+        )
 
-        # Calculate downside metrics
-        portfolio_returns = (returns_df * weight_array).sum(axis=1)
+        # ── VaR / CVaR ───────────────────────────────────────────────────────
+        scale = np.sqrt(252)
+        var_95 = float(np.percentile(daily_port, 5) * scale)
+        var_99 = float(np.percentile(daily_port, 1) * scale)
+        cvar_95 = float(daily_port[daily_port <= np.percentile(daily_port, 5)].mean() * scale)
+        cvar_99 = float(daily_port[daily_port <= np.percentile(daily_port, 1)].mean() * scale)
 
-        # Sortino Ratio (downside deviation)
-        downside_returns = portfolio_returns[portfolio_returns < 0]
-        downside_std = downside_returns.std() * np.sqrt(252) if len(downside_returns) > 0 else portfolio_volatility
-        sortino = (portfolio_return - risk_free_rate) / downside_std if downside_std > 0 else 0.0
-
-        # VaR and CVaR (95% and 99%)
-        var_95 = np.percentile(portfolio_returns, 5) * np.sqrt(252)
-        var_99 = np.percentile(portfolio_returns, 1) * np.sqrt(252)
-
-        cvar_95 = portfolio_returns[portfolio_returns <= np.percentile(portfolio_returns, 5)].mean() * np.sqrt(252)
-        cvar_99 = portfolio_returns[portfolio_returns <= np.percentile(portfolio_returns, 1)].mean() * np.sqrt(252)
-
-        # Max Drawdown
-        cumulative_returns = (1 + portfolio_returns).cumprod()
-        running_max = cumulative_returns.expanding().max()
-        drawdown = (cumulative_returns - running_max) / running_max
-        max_drawdown = drawdown.min()
-
-        # Calmar Ratio
+        # ── Max Drawdown / Calmar ─────────────────────────────────────────────
+        cum = (1 + daily_port).cumprod()
+        drawdown = (cum - cum.expanding().max()) / cum.expanding().max()
+        max_drawdown = float(drawdown.min())
         calmar = portfolio_return / abs(max_drawdown) if max_drawdown != 0 else 0.0
 
         return {
-            "expected_return_ann": float(portfolio_return),
-            "volatility_ann": float(portfolio_volatility),
+            "expected_return_ann": portfolio_return,
+            "volatility_ann": portfolio_volatility,
             "sharpe": float(sharpe),
             "sortino": float(sortino),
-            "var95": float(var_95),
-            "var99": float(var_99),
-            "cvar95": float(cvar_95),
-            "cvar99": float(cvar_99),
-            "max_drawdown": float(max_drawdown),
-            "calmar": float(calmar)
+            "var95": var_95,
+            "var99": var_99,
+            "cvar95": cvar_95,
+            "cvar99": cvar_99,
+            "max_drawdown": max_drawdown,
+            "calmar": float(calmar),
         }
 
 
 # Global instance
 _calculator = None
+
 
 def get_calculator() -> RiskCalculator:
     """Get or create global calculator instance."""
