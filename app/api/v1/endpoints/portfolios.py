@@ -1,5 +1,10 @@
+from pathlib import Path
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+import numpy as np
+import pandas as pd
+from sklearn.covariance import LedoitWolf
+
 from app.db.session import get_db
 from app.schemas.portfolio import PortfolioQuoteRequest, PortfolioOptimizeRequest, PortfolioOptimizeResponse
 from app.schemas.risk import PortfolioQuoteResponse, RiskMetrics
@@ -7,16 +12,16 @@ from app.cache.redis_client import redis_client, compute_weights_hash
 from app.core.config import get_settings
 from app.core.risk_calculator import get_calculator
 from app.core.optimizer import optimize_risk_parity, optimize_min_variance, optimize_max_sharpe
-import numpy as np
 
 router = APIRouter()
 settings = get_settings()
+DATA_DIR = Path("data")
 
 
 def normalize_weights(weights: dict) -> dict:
     """Normalize weights to sum to 1.0."""
     total = sum(weights.values())
-    if abs(total - 1.0) > 0.01:  # Allow 1% tolerance
+    if abs(total - 1.0) > 0.01:
         return {k: v / total for k, v in weights.items()}
     return weights
 
@@ -26,19 +31,10 @@ async def get_portfolio_quote(
     request: PortfolioQuoteRequest,
     db: Session = Depends(get_db)
 ):
-    """
-    Get risk metrics for a portfolio.
-
-    This endpoint calculates risk metrics in real-time using historical data
-    and covariance matrices. Results are cached in Redis for fast subsequent lookups.
-    """
-    # Normalize weights
+    """Get risk metrics for a portfolio."""
     normalized_weights = normalize_weights(request.weights)
-
-    # Compute weights hash
     weights_hash = compute_weights_hash(normalized_weights)
 
-    # Try Redis cache first
     cache_key = redis_client.build_key(
         dataset_version=settings.DATASET_VERSION,
         model=request.model.value,
@@ -56,7 +52,6 @@ async def get_portfolio_quote(
             cache_hit=True
         )
 
-    # Calculate metrics in real-time
     try:
         calculator = get_calculator()
         metrics = calculator.calculate_metrics(
@@ -65,8 +60,6 @@ async def get_portfolio_quote(
             horizon_months=request.horizon_months,
             risk_free_rate=0.02
         )
-
-        # Cache the result
         redis_client.set(cache_key, metrics)
 
         return PortfolioQuoteResponse(
@@ -76,10 +69,7 @@ async def get_portfolio_quote(
             cache_hit=False
         )
     except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail=f"Failed to calculate risk metrics: {str(e)}"
-        )
+        raise HTTPException(status_code=500, detail=f"Failed to calculate risk metrics: {str(e)}")
 
 
 @router.post("/optimize", response_model=PortfolioOptimizeResponse)
@@ -88,65 +78,60 @@ async def optimize_portfolio(
     db: Session = Depends(get_db)
 ):
     """
-    Compute optimal portfolio weights for the selected assets using the chosen strategy.
+    Compute optimal portfolio weights for the selected assets.
 
-    - **risk_parity**: Equal Risk Contribution â€” each asset contributes equally to total portfolio risk
-    - **max_sharpe**: Maximize the Sharpe Ratio (return / volatility)
-    - **min_variance**: Minimize portfolio variance (lowest-risk combination)
-
-    Returns the computed weights and corresponding risk metrics.
+    - **risk_parity**: Equal Risk Contribution
+    - **max_sharpe**: Maximize Sharpe Ratio
+    - **min_variance**: Minimize portfolio variance
     """
     try:
-        calculator = get_calculator()
+        # ©¤©¤ Load returns ©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤
+        prices_df = pd.read_parquet(DATA_DIR / "clean_prices.parquet")
+        prices_df = prices_df[prices_df["log_return"].notna()].copy()
+        returns_wide = prices_df.pivot(
+            index="trade_date", columns="ticker", values="log_return"
+        ).sort_index()
 
-        # Load covariance data
-        calculator._load_covariance_matrices()
-        calculator._load_returns_data()
+        available_tickers = sorted(returns_wide.columns.tolist())
 
-        # Validate tickers against available data
-        available_tickers = list(calculator._tickers)
+        # Validate tickers
         unknown = [t for t in request.tickers if t not in available_tickers]
         if unknown:
             raise HTTPException(
                 status_code=422,
                 detail=f"Unknown tickers: {unknown}. Available: {available_tickers}"
             )
-
         if len(request.tickers) < 2:
             raise HTTPException(status_code=422, detail="At least 2 tickers are required.")
 
-        # Get closest covariance matrix for the requested date
-        closest_date = calculator._get_closest_date(str(request.as_of_date))
-        full_cov = calculator._cov_matrices[closest_date]
+        # ©¤©¤ Window returns to horizon ©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤
+        n_days = int(request.horizon_months * 21)
+        returns_sub = returns_wide[request.tickers].tail(n_days).fillna(0.0)
 
-        # Build sub-matrix for selected tickers only
-        idx = [available_tickers.index(t) for t in request.tickers]
-        cov_sub = full_cov[np.ix_(idx, idx)]
+        # ©¤©¤ Ledoit-Wolf covariance (annualised) ©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤
+        lw = LedoitWolf()
+        cov_daily = lw.fit(returns_sub.values).covariance_
+        cov_ann = cov_daily * 252
 
-        # Compute expected returns for selected tickers
-        returns_df = calculator._returns_data
-        mean_returns_full = returns_df.mean().values  # aligned with _tickers
-        mean_returns_sub = np.array([
-            mean_returns_full[available_tickers.index(t)] * 252
-            for t in request.tickers
-        ])
+        # ©¤©¤ Annualised expected returns ©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤
+        mean_returns_ann = returns_sub.mean().values * 252
 
-        # Run optimization
+        # ©¤©¤ Run optimization ©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤
         model_value = request.model.value
         if model_value == "risk_parity":
-            weights = optimize_risk_parity(cov_sub, request.tickers)
+            weights = optimize_risk_parity(cov_ann, request.tickers)
         elif model_value == "min_variance":
-            weights = optimize_min_variance(cov_sub, request.tickers)
+            weights = optimize_min_variance(cov_ann, request.tickers)
         elif model_value == "max_sharpe":
-            weights = optimize_max_sharpe(mean_returns_sub, cov_sub, request.tickers)
+            weights = optimize_max_sharpe(mean_returns_ann, cov_ann, request.tickers)
         else:
             raise HTTPException(
                 status_code=422,
-                detail=f"Unsupported optimization model: {model_value}. "
-                       "Use 'risk_parity', 'max_sharpe', or 'min_variance'."
+                detail=f"Unsupported model: {model_value}. Use 'risk_parity', 'max_sharpe', or 'min_variance'."
             )
 
-        # Calculate risk metrics for the optimized weights
+        # ©¤©¤ Risk metrics for optimized weights ©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤
+        calculator = get_calculator()
         metrics = calculator.calculate_metrics(
             weights=weights,
             as_of_date=str(request.as_of_date),
@@ -164,7 +149,4 @@ async def optimize_portfolio(
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail=f"Optimization failed: {str(e)}"
-        )
+        raise HTTPException(status_code=500, detail=f"Optimization failed: {str(e)}")

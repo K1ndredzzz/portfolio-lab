@@ -5,6 +5,7 @@ const RiskDashboard: React.FC = () => {
   const metrics = usePortfolioStore((state) => state.metrics);
   const isLoadingMetrics = usePortfolioStore((state) => state.isLoadingMetrics);
   const metricsError = usePortfolioStore((state) => state.metricsError);
+  const horizon_months = usePortfolioStore((state) => state.horizon_months);
 
   if (isLoadingMetrics) {
     return (
@@ -90,7 +91,7 @@ const RiskDashboard: React.FC = () => {
     },
     {
       label: 'Max Drawdown',
-      sublabel: 'Full History',
+      sublabel: 'All History',
       value: formatPercent(metrics.max_drawdown),
       color: 'var(--danger)',
     },
@@ -121,8 +122,9 @@ const RiskDashboard: React.FC = () => {
         ))}
       </div>
       <div className="metrics-note">
-        Computed from daily log-returns (5-yr rolling window, Ledoit-Wolf shrinkage).
-        VaR &amp; CVaR are annualized via √252 scaling of daily percentiles.
+        Returns &amp; covariance (Ledoit-Wolf) computed over the last <strong>{horizon_months}-month</strong> window from daily log-returns.
+        VaR &amp; CVaR use the parametric normal method: μ ± z·σ (annualized).
+        Max Drawdown uses full available price history.
       </div>
 
       <style>{`

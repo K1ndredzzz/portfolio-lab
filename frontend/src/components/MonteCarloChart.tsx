@@ -116,7 +116,7 @@ const MonteCarloChart: React.FC = () => {
 
   const layout = {
     title: {
-      text: `Monte Carlo Simulation (${horizon_months} months, ${monteCarlo.n_simulations.toLocaleString()} paths)`,
+      text: `1 Year Projection, ${monteCarlo.n_simulations.toLocaleString()} paths`,
       font: { color: '#F3F4F6', family: 'Inter, sans-serif' }
     },
     paper_bgcolor: 'transparent',
@@ -190,7 +190,7 @@ const MonteCarloChart: React.FC = () => {
   return (
     <div className="monte-carlo-chart">
       <div className="chart-header">
-        <h2>Monte Carlo Simulation</h2>
+        <h2>Monte Carlo Projection (Next 12 months)</h2>
         <div className="stats">
           <div className="stat">
             <span className="label">Mean:</span>
